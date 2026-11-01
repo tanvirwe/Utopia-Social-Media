@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <!-- Main Feed -->
+    <div class="col-md-8">
+      <div class="card mb-3 shadow-sm">
+        <div class="card-body d-flex justify-content-between align-items-center">
+          <h4 class="mb-0">Your Feed</h4>
+          <a href="{% url 'posts:create_post' %}" class="btn btn-primary btn-sm">+ New Post</a>
+        </div>
+        <p class="text-muted mb-2 ps-3">Posts from you and people you follow.</p>
+      </div>
+
+      {% for post in posts %}
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+
+
+          <div class="d-flex align-items-center mb-2">
+
+            {% if post.profile.profile_picture %}
+              <img src="{{ post.profile.profile_picture.url }}"
+                   alt="Profile Picture"
+                   class="rounded-circle me-2"
+                   width="45" height="45">
+            {% else %}
+              <div class="rounded-circle bg-light d-flex justify-content-center align-items-center me-2"
+                   style="width:45px; height:45px; border:1px solid #ccc;">
+                <i class="bi bi-person text-secondary" style="font-size:20px;"></i>
+              </div>
+            {% endif %}
+
+            <div>
+              <a href="{% url 'posts:profile_posts' post.profile.id %}"
+                 class="fw-bold text-decoration-none text-dark">
+                {{ post.profile.user.username }}
+              </a>
+              <div>
+                <small class="text-muted">{{ post.created_at|date:"M d, Y H:i" }}</small>
+              </div>
+            </div>
+
+            <!-- Badge Color -->
+            {% if post.profile.badge %}
+              <span class="badge ms-3"
+                    style="background-color:
+                      {% if post.profile.badge == 'gold' %}#FFD700
+                      {% elif post.profile.badge == 'silver' %}#C0C0C0
+                      {% elif post.profile.badge == 'bronze' %}#CD7F32
+                      {% else %}#808080{% endif %};
+                      color: black; border: 1px solid #999;">
+                {{ post.profile.badge|title }}
+              </span>
+            {% endif %}
+
+            {% if post.is_emergency %}
+              <span class="badge bg-danger ms-2">🚨 Emergency</span>
+            {% endif %}
+          </div>
+
+          <!-- Post Content -->
+          {% if post.title %}
+            <h5 class="mt-2">{{ post.title }}</h5>
+          {% endif %}
+          <p class="mt-1">{{ post.content|linebreaksbr }}</p>
+
+          {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Post image" class="img-fluid rounded mb-2">
+          {% endif %}
+
+          <!-- Post Footer -->
+          <div class="d-flex justify-content-between align-items-center border-top pt-2">
+            <form method="post" action="{% url 'posts:toggle_like' post.id %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-outline-primary btn-sm">
+                {% if post.id in liked_post_ids %}Unlike{% else %}Like{% endif %}
+              </button>
+            </form>
+
+            <div>
+              <span class="text-muted me-3">Likes: {{ post.likes_count }}</span>
+              <a href="{% url 'posts:detail' post.id %}" class="btn btn-outline-secondary btn-sm">
+                Comments ({{ post.comments.count }})
+              </a>
+
+              {% if user == post.profile.user %}
+                <a href="{% url 'posts:edit_post' post.id %}" class="btn btn-outline-warning btn-sm">Edit</a>
+                <a href="{% url 'posts:delete_post' post.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+              {% endif %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% empty %}
+      <div class="alert alert-secondary">No posts to show. Create one to get started.</div>
+      {% endfor %}
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-md-4">
+      <div class="card mb-3 shadow-sm">
+        <div class="card-body">
+          <h5>Quick Actions</h5>
+          {% if user.is_authenticated %}
+            <a href="{% url 'posts:create_post' %}" class="btn btn-primary w-100 mb-2">Create Post</a>
+            <a href="{% url 'posts:profile_posts' user.profile.id %}" class="btn btn-outline-secondary w-100 mb-2">My Profile</a>
+            <a href="{% url 'posts:emergency_feed' %}" class="btn btn-danger w-100">🚨 Emergency Posts</a>
+          {% else %}
+            <a href="{% url 'accounts:login' %}" class="btn btn-primary w-100">Login to interact</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
