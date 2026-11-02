@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## How the quiz works
 
 New users must pass a 5-question quiz (60% or more) before registering.
