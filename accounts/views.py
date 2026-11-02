@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProfilePictureForm
 
-
+"""Accounts views: quiz, registration, login, logout, profile and people list."""
 
 PASS_PERCENT = 60
 

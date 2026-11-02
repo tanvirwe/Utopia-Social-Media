@@ -1,4 +1,4 @@
-# posts/views.py
+"""Posts views: feed, posts, comments, likes, follows, emergency feed, search and Q&A."""
 
 from django.db import transaction
 from django.db.models import F

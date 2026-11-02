@@ -1,3 +1,4 @@
+"""Funding views: campaign list, detail with donations, create, edit and delete."""
 from django.shortcuts import render
 
 # Create your views here.

@@ -1,4 +1,4 @@
-# posts/models.py
+"""Posts models: Post, Comment, Like, Follow, Question and Answer."""
 from django.db import models
 from django.utils import timezone
 
