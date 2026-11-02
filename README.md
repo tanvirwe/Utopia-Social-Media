@@ -14,8 +14,3 @@ The score decides the profile badge: Gold (90+), Silver (75+), Bronze (60+).
 4. Apply migrations: `python manage.py migrate`
 5. Create an admin account: `python manage.py createsuperuser`
 6. Start the server: `python manage.py runserver`, then open http://127.0.0.1:8000
-=======
-I really dont know how CSS and JS a major part in my project!!! I just pushed a CSS and it added staticfiles and it was 30K+ lines!!!!!! MOST of them were small .js file. But 90% of my code was Python I never used JS in my project!!!!!
-
-This project is developed by our team.
->>>>>>> cb9ba5c (Updated project README)
