@@ -13,4 +13,6 @@ The score decides the profile badge: Gold (90+), Silver (75+), Bronze (60+).
 3. Install dependencies: `pip install -r requirements.txt`
 4. Apply migrations: `python manage.py migrate`
 5. Create an admin account: `python manage.py createsuperuser`
-6. Start the server: `python manage.py runserver`, then open http://127.0.0.1:8000
+6. Start the server:
+7. Developed by Suzana
+7. `python manage.py runserver`, then open http://127.0.0.1:8000
